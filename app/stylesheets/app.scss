@@ -6,8 +6,8 @@
     font-family: 'Open Sans';
     color: white;
     min-height: 100%;
-    background: -webkit-radial-gradient(  #2b1339, #380c77);
-    background: radial-gradient(   #2b1339, #380c77);
+    background: webkit-linear-gradient(#380c77, #2b1339);           /* A gradient on 45deg axis starting blue and finishing red */
+    background: linear-gradient(#380c77, #2b1339); 
   }
 
   .landing {
