@@ -1,0 +1,186 @@
+//Player bar
+@mixin circle-dimensions($diameter){
+  height: $diameter;
+  width: $diameter;
+} 
+
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 100;
+
+  a, a:hover{
+    color: white;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+
+  a:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .container {
+    display: table;
+    //padding: 0; //This makes the code mismatch the mockup
+    min-height: 100%;
+  }
+
+
+  $control-width: 25%;
+  .left-controls{
+    text-align: left;
+    width: $control-width;
+  }
+
+  .right-controls{
+    text-align: right;
+    width: $control-width;
+  }
+
+  .play-controls {
+    a {
+      font-size: 20px;
+      vertical-align: middle;
+    }
+    .previous {
+      margin-right: 65px;
+    }
+    .play-pause {
+      margin-right: 60px;
+      font-size: 30px
+    }
+  }
+
+  .currently-playing {
+    width: 100% - 2 * $control-width;
+    text-align: center;
+    position: relative;
+
+    .song-name, .artist-name{
+      text-align: center;
+      font-size: 12px;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 300;
+    }
+    .song-name {
+      top: 20px;
+    }
+    .artist-name {
+      bottom: 20px;
+    }
+  }
+
+  .queue-toggle {
+    display: inline-block;
+    margin-left: 75px;
+
+    .queue-toggle i {
+      font-size: 20px;
+    }
+
+  }//end queue toggle
+
+  .volume {
+    display: inline-block;
+
+    i {
+      width: 40px;
+      font-size: 20px;
+      display: inline-block;
+      vertical-align: middle;
+    } 
+
+    .seek-bar {
+      display: inline-block;
+      width: 100px;
+      vertical-align: middle;
+    }
+  }//end volume
+}//End of .player-bar
+
+.player-bar-control-group {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.seek-control {
+  position: relative;
+
+  $top-spacing: 10px;
+
+  .current-time {
+    position: absolute;
+    top: $top-spacing;
+  }
+
+  .total-time {
+    position: absolute;
+    right: 0;
+    top: $top-spacing;
+  }
+
+}//end seek control
+
+
+
+.seek-bar {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+
+  .fill {
+    background: white;
+    width: 36%;
+    height: 5px;
+    border-radius: 2px;
+  }
+
+  .thumb {
+    position: absolute;
+    @include circle-dimensions(10px);
+    background: white;
+    left: 36%;
+    margin-left: -5px;
+    top: 50%;
+    margin-top: -5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+  }
+
+  &.no-animate {
+    .fill, .thumb {
+      transition: none;
+    }
+  }
+
+  &:hover .thumb {
+    @include circle-dimensions(20px);
+
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+
+}//end seek bar
+
+
+
+
+
+
+  
+
+
+
+ 
