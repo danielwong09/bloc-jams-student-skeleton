@@ -12,26 +12,27 @@
   margin-bottom: 20px;
 
   h3, h4, h5 {
-  // Modifying the line height allows us to increase the spacing above and
-  // below the content. Another way of achieving the same effect would be to
-  // set a margin-top and margin-bottom for each of these classes
-  line-height: 150%;
+    // Modifying the line height allows us to increase the spacing above and
+    // below the content. Another way of achieving the same effect would be to
+    // set a margin-top and margin-bottom for each of these classes
+    line-height: 150%;
 
-  h3 {
-    font-size: 48px;
-    font-weight: 300;
-  }
+    h3 {
+      font-size: 48px;
+      font-weight: 300;
+    }
 
-  h4 {
-    font-size: 24px;
-    font-weight: 700;
-  }
+    h4 {
+      font-size: 24px;
+      font-weight: 700;
+    }
 
-  h5 {
-    font-size: 16px;
-    font-weight: 500;
+    h5 {
+      font-size: 16px;
+      font-weight: 500;
+    }
   }
-}
+} 
 
 // This styles our Song Listing
 .table.album-song-listing{
@@ -40,7 +41,7 @@
   font-weight: 300;
 
   // Override the defaults that Bootstrap sets.
-  td{
+  td {
     padding: 20px;
     border-top: 1px solid rgba(255, 255, 255, .4);
   }

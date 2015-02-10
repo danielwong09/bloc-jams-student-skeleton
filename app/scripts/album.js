@@ -145,24 +145,77 @@ var changeAlbumView = function(album){
 
 var currentAlbum = 0;
 var swapAlbum = function(){
-
   if (currentAlbum == albumCollection.length -1){
     currentAlbum = 0;
   }
   else {
     currentAlbum++;
   }
-
   changeAlbumView(albumCollection[currentAlbum]);
+};
 
+//mine
+var updateSeekPercentage = function($seekBar, event){
+  //get mouse position
+
+  var barWidth = $seekBar.width();
+
+  var offsetX = event.pageX - $seekBar.offset().left;
+
+  var offsetXPercent = offsetX / barWidth * 100;
+  offsetXPercent = Math.max(0, offsetXPercent);
+  offsetXPercent = Math.min(100, offsetXPercent);
+
+  var percentageString = offsetXPercent + '%';
+
+  $seekBar.find('.thumb').css({left: percentageString});
+  $seekBar.find('.fill').width(percentageString);
+
+  console.log('Mouse position: ' + event.pageX + ', ' + event.pageY);
+};
+
+
+var setupSeekBars = function(){
+
+  var $seekBars = $('.player-bar .seek-bar'); //Do I not need to declare Var?
+
+  $seekBars.click(function(event){
+    updateSeekPercentage($(this), event); //use this rather than seekbar, since there are multiple seek bars (the actual seek bar and the volume control)
+  });
+
+  //on the thumb.click, bind mouse move
+
+  $seekBars.find('.thumb').mousedown(function(event){
+    var $seekBar = $(this).parent();
+
+    $seekBar.addClass('no-animate');
+
+    $(document).bind('mousemove.thumb', function(event){
+      updateSeekPercentage($seekBar, event);
+
+      $(document).bind('mouseup.thumb', function(event){
+
+        $seekBar.removeClass('no-animate');
+
+        $(document).unbind('mousemove.thumb');
+        $(document).unbind('mouseup.thumb');
+
+      });
+
+    });
+
+  });
 
 };
+
 
 if (document.URL.match(/\/album.html/)) {
    // Wait until the HTML is fully processed.
    $(document).ready(function() {
 
     changeAlbumView(albumCollection[0]);
+
+    setupSeekBars();
 
     $(".album-image").click(swapAlbum);
 
