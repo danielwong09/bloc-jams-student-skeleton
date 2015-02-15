@@ -171,7 +171,7 @@ var updateSeekPercentage = function($seekBar, event){
   $seekBar.find('.thumb').css({left: percentageString});
   $seekBar.find('.fill').width(percentageString);
 
-  console.log('Mouse position: ' + event.pageX + ', ' + event.pageY);
+  //console.log('Mouse position: ' + event.pageX + ', ' + event.pageY);
 };
 
 
@@ -190,15 +190,15 @@ var setupSeekBars = function(){
 
     $seekBar.addClass('no-animate');
 
-    $(document).bind('mousemove.thumb', function(event){
+    $(document).on('mousemove.thumb', function(event){
       updateSeekPercentage($seekBar, event);
 
-      $(document).bind('mouseup.thumb', function(event){
+      $(document).on('mouseup.thumb', function(event){
 
         $seekBar.removeClass('no-animate');
 
-        $(document).unbind('mousemove.thumb');
-        $(document).unbind('mouseup.thumb');
+        $(document).off('mousemove.thumb');
+        $(document).off('mouseup.thumb');
 
       });
 
