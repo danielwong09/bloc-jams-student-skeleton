@@ -1,4 +1,4 @@
-//Example Album
+/*//Example Album
 
 var albumPicasso = {
  name: 'The Colors',
@@ -46,7 +46,7 @@ var albumRPSound = {
      { name: 'Abstraction', length: '4:15'}
    ]
 };
-
+*/
 currentlyPlayingSong = null;
 
 var albumCollection = [albumPicasso, albumMarconi, albumRPSound];
