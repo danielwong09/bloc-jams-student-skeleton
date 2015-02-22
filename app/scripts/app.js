@@ -71,6 +71,12 @@ blocJams.config(['$stateProvider', '$locationProvider', function($stateProvider,
     templateUrl: '/templates/collection.html'
   });
 
+  $stateProvider.state('album', {
+    url: '/album',
+    controller: 'Album.controller',
+    templateUrl: '/templates/album.html'
+  });
+
 }]);
  
 
@@ -104,5 +110,48 @@ blocJams.controller('Collection.controller',['$scope', function($scope){
   for(var i = 0; i <33; i++){
     $scope.albums.push(angular.copy(albumPicasso));
   };
+  
+}]);
+
+blocJams.controller('Album.controller',['$scope', function($scope){
+
+  $scope.album = angular.copy(albumPicasso);
+
+  var hoveredSong = null;
+  var playingSong = null;
+
+
+  $scope.onHoverSong = function(song){
+    console.log('on');
+  
+    hoveredSong = song;
+
+  };
+
+  $scope.offHoverSong = function(song){
+    console.log('off');
+
+    hoveredSong = null;
+
+  };
+
+  $scope.getSongState = function(song) {
+    if (song === playingSong) {
+      return 'playing';
+    }
+    else if (song === hoveredSong) {
+      return 'hovered';
+    }
+    return 'default';
+  };
+
+  $scope.playSong = function(song) {
+    playingSong = song;
+  };
+
+  $scope.pauseSong = function(song) {
+    playingSong = null;
+  };
+
   
 }]);
