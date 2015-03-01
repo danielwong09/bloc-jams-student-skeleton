@@ -183,6 +183,7 @@ blocJams.service('SongPlayer', function() {
          currentTrackIndex = this.currentAlbum.songs.length - 1;
        }
        this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+       this.playing=true;
      },
     next: function() {
        var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
@@ -191,6 +192,7 @@ blocJams.service('SongPlayer', function() {
          currentTrackIndex = 0;
        }
        this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+       this.playing=true;
      },
   };
 });
