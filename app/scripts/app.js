@@ -152,9 +152,14 @@ blocJams.controller('Album.controller',['$scope', 'SongPlayer', function($scope,
 
 blocJams.controller('PlayerBar.controller', ['$scope', 'SongPlayer', function($scope, SongPlayer) {
   $scope.songPlayer = SongPlayer;
+
 }]);
  
 blocJams.service('SongPlayer', function() {
+  var trackIndex = function(album, song) {
+     return album.songs.indexOf(song);
+  };
+
   return {
       currentSong: null,
       currentAlbum: null,
@@ -169,6 +174,23 @@ blocJams.service('SongPlayer', function() {
     setSong: function(album, song) {
       this.currentAlbum = album;
       this.currentSong = song;
-    }
+
+    },
+    previous: function() {
+       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+       currentTrackIndex--;
+       if (currentTrackIndex < 0) {
+         currentTrackIndex = this.currentAlbum.songs.length - 1;
+       }
+       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+     },
+    next: function() {
+       var currentTrackIndex = trackIndex(this.currentAlbum, this.currentSong);
+       currentTrackIndex++;
+       if (currentTrackIndex >= this.currentAlbum.songs.length) {
+         currentTrackIndex = 0;
+       }
+       this.currentSong = this.currentAlbum.songs[currentTrackIndex];
+     },
   };
 });
