@@ -102,7 +102,7 @@ blocJams.controller('Landing.controller', ['$scope', function($scope) {
 
 }]);
 
-blocJams.controller('Collection.controller', ['$scope','SongPlayer', function($scope, SongPlayer) {
+blocJams.controller('Collection.controller', ['$scope','SongPlayer', '$state', function($scope, SongPlayer, $state) {
   $scope.hideOverlay = true;
 
   $scope.albums = [];
@@ -111,7 +111,10 @@ blocJams.controller('Collection.controller', ['$scope','SongPlayer', function($s
   };
 
   $scope.playAlbum = function(album){
-     SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
+    //Race condition?
+    SongPlayer.setSong(album, album.songs[0]); // Targets first song in the array.
+    $state.go('album');
+
   }
   
 }]);
