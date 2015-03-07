@@ -212,3 +212,17 @@ blocJams.service('SongPlayer', function() {
      },
   };
 });
+
+blocJams.directive('slider', function(){
+  function link(scope, element, attrs) {
+    scope.startDrag = function(){
+      alert('Hello');
+    };
+
+  }
+  return {
+    link: link,
+    restrict: 'E',
+    templateUrl: '/templates/slider.html'
+  }
+});
