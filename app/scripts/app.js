@@ -214,15 +214,57 @@ blocJams.service('SongPlayer', function() {
 });
 
 blocJams.directive('slider', function(){
+
+  updateSeekPercentage = function($seekBar, event){
+    //get mouse position
+    
+    var barWidth = $seekBar.width();
+    
+    var offsetX = event.pageX - $seekBar.offset().left;
+
+    var offsetXPercent = offsetX / barWidth * 100;
+    offsetXPercent = Math.max(0, offsetXPercent);   
+    offsetXPercent = Math.min(100, offsetXPercent);
+
+    var percentageString = offsetXPercent + '%';
+
+    $seekBar.find('.thumb').css({left: percentageString});
+    $seekBar.find('.fill').width(percentageString);
+  };
+
   function link(scope, element, attrs) {
-    scope.startDrag = function(){
-      alert('Hello');
+    var $seekBar = $(element);
+
+    scope.seekBarClick = function(event){
+      updateSeekPercentage($(event.target),event);
     };
 
-  }
+    scope.fillBarClick = function(event){
+      updateSeekPercentage($(event.target).parent(),event);
+    };
+
+    $seekBar.find('.thumb').mousedown(function(event){
+      $seekBar.addClass('no-animate');
+
+      $(document).bind('mousemove.thumb', function(event){
+        updateSeekPercentage($seekBar, event);
+      });
+
+      //cleanup
+      $(document).bind('mouseup.thumb', function(){
+        $seekBar.removeClass('no-animate');
+        $(document).unbind('mousemove.thumb');
+        $(document).unbind('mouseup.thumb');
+      });
+
+    });
+
+  };//end link function
+
   return {
     link: link,
     restrict: 'E',
+    replace: true,
     templateUrl: '/templates/slider.html'
   }
-});
+});//end directive
