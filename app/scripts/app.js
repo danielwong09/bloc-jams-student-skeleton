@@ -265,6 +265,6 @@ blocJams.directive('slider', function(){
     link: link,
     restrict: 'E',
     replace: true,
-    templateUrl: '/templates/slider.html'
+    templateUrl: '/templates/directives/slider.html'
   }
 });//end directive
