@@ -282,36 +282,42 @@ blocJams.directive('clickMe', function(){
     }
   }
 });
-/*
+
 blocJams.directive('countHoverTime', function(){
   return {
     restrict: 'A',
     link: function(scope, element) {
-
+      
       var hoverDuration = 0;
       var timeOutID;
 
-      //find the item, attach on hover event handler
-      $(element).hover(onHoverElement, offHoverElement);
-      
       var incrementTimer = function(){
         hoverDuration++;
+        passTheTime();
+      };
+      
+      var passTheTime = function(){
+        timeOutID = window.setTimeout(incrementTimer,1000);
       };
 
       var onHoverElement = function(){
         console.log('Starting hover timer');
         hoverDuration =0;
-        timeOutID = window.setTimeout(incrementTimer,1000);
+        passTheTime();
       };
 
       var offHoverElement = function(){
         console.log('Hovered seconds: ' + hoverDuration);
-        timeOutID.clearTimeout();
+        window.clearTimeout(timeOutID);
       };
+      
+      //find the item, attach on hover event handler
+      $(element).hover(onHoverElement, offHoverElement);
       
     }
   }
 });
+/*
 
 blocJams.directive('classify', function(){
   return {
