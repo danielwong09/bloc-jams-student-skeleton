@@ -317,17 +317,20 @@ blocJams.directive('countHoverTime', function(){
     }
   }
 });
-/*
+
 
 blocJams.directive('classify', function(){
   return {
     restrict: 'AEC',
     link: function(scope,element,attr){
-      //pull element text
-      var newClass = element.textContent;
-      //put element text into the class attr
-      element.className = element.className + " " + newClass;
+
+      //Jquery
+      var newClass = $(element).text();
+      $(element).addClass(newClass);
+      
+      //Vanilla Javascript?
+      //var newClass = element.textContent;
+      //element.className = element.className + " " + newClass;
     }
   }
 });
-*/
