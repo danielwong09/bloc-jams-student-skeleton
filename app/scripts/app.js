@@ -268,3 +268,60 @@ blocJams.directive('slider', function(){
     templateUrl: '/templates/directives/slider.html'
   }
 });//end directive
+
+
+blocJams.directive('clickMe', function(){
+  return {
+    restrict: 'E',
+    replace: true,
+    template: "<div ng-click='clickMe()'>Click me.</div>",
+    link: function(scope, element, attributes) {
+      scope.clickMe = function(){
+        alert('You clicked me!' + element);
+      };
+    }
+  }
+});
+/*
+blocJams.directive('countHoverTime', function(){
+  return {
+    restrict: 'A',
+    link: function(scope, element) {
+
+      var hoverDuration = 0;
+      var timeOutID;
+
+      //find the item, attach on hover event handler
+      $(element).hover(onHoverElement, offHoverElement);
+      
+      var incrementTimer = function(){
+        hoverDuration++;
+      };
+
+      var onHoverElement = function(){
+        console.log('Starting hover timer');
+        hoverDuration =0;
+        timeOutID = window.setTimeout(incrementTimer,1000);
+      };
+
+      var offHoverElement = function(){
+        console.log('Hovered seconds: ' + hoverDuration);
+        timeOutID.clearTimeout();
+      };
+      
+    }
+  }
+});
+
+blocJams.directive('classify', function(){
+  return {
+    restrict: 'AEC',
+    link: function(scope,element,attr){
+      //pull element text
+      var newClass = element.textContent;
+      //put element text into the class attr
+      element.className = element.className + " " + newClass;
+    }
+  }
+});
+*/
