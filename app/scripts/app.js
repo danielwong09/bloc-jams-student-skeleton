@@ -213,51 +213,56 @@ blocJams.service('SongPlayer', function() {
   };
 });
 
-blocJams.directive('slider', function(){
+blocJams.directive('slider', ['$document', function($document){
 
-  updateSeekPercentage = function($seekBar, event){
+  calculateSliderPercentFromMouseEvent = function($seekBar, event){
     //get mouse position
     
     var barWidth = $seekBar.width();
-    
     var offsetX = event.pageX - $seekBar.offset().left;
-
-    var offsetXPercent = offsetX / barWidth * 100;
+    var offsetXPercent = offsetX / barWidth;
     offsetXPercent = Math.max(0, offsetXPercent);   
-    offsetXPercent = Math.min(100, offsetXPercent);
-
-    var percentageString = offsetXPercent + '%';
-
-    $seekBar.find('.thumb').css({left: percentageString});
-    $seekBar.find('.fill').width(percentageString);
+    offsetXPercent = Math.min(1, offsetXPercent);
+    return offsetXPercent;
   };
 
   function link(scope, element, attrs) {
+    scope.value = 0;
+    scope.max = 100;
     var $seekBar = $(element);
-
-    scope.seekBarClick = function(event){
-      updateSeekPercentage($(event.target),event);
-    };
-
-    scope.fillBarClick = function(event){
-      updateSeekPercentage($(event.target).parent(),event);
-    };
-
-    $seekBar.find('.thumb').mousedown(function(event){
-      $seekBar.addClass('no-animate');
-
-      $(document).bind('mousemove.thumb', function(event){
-        updateSeekPercentage($seekBar, event);
-      });
-
-      //cleanup
-      $(document).bind('mouseup.thumb', function(){
-        $seekBar.removeClass('no-animate');
-        $(document).unbind('mousemove.thumb');
-        $(document).unbind('mouseup.thumb');
-      });
-
-    });
+    
+    scope.onClickSlider = function(event) {
+         var percent = calculateSliderPercentFromMouseEvent($seekBar, event);
+         scope.value = percent * scope.max;
+       }
+    
+    var percentString = function () {
+      var percent = Number(scope.value) / Number(scope.max) * 100;
+      return percent + "%";
+    }
+    
+    scope.fillStyle = function(){
+      return {width: percentString()};
+    }
+    
+    scope.thumbStyle = function(){     
+      return {left: percentString()};
+    }
+    
+    scope.trackThumb = function() {
+         $document.bind('mousemove.thumb', function(event){
+           var percent = calculateSliderPercentFromMouseEvent($seekBar, event);
+           scope.$apply(function(){
+             scope.value = percent * scope.max;
+           });
+         });
+ 
+         //cleanup
+         $document.bind('mouseup.thumb', function(){
+           $document.unbind('mousemove.thumb');
+           $document.unbind('mouseup.thumb');
+         });
+       };
 
   };//end link function
 
@@ -265,6 +270,7 @@ blocJams.directive('slider', function(){
     link: link,
     restrict: 'E',
     replace: true,
-    templateUrl: '/templates/directives/slider.html'
+    templateUrl: '/templates/directives/slider.html',
+    scope:{}
   }
-});//end directive
+}]);//end directive
